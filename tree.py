@@ -13,16 +13,15 @@ class Node:
         return self._children
 
     def add_child(self, node):
-        if node:
-            if node not in self._children:
-                self._children.append(node)
-                node._parent = self
+        if node not in self._children:
+            self._children.append(node)
+            node.parent = self
 
     def remove_child(self, node):
         if node not in self._children:
             return
         self._children.remove(node)
-        node._parent = None
+        node.parent = None
 
 
     @property
@@ -31,20 +30,36 @@ class Node:
 
     @parent.setter
     def parent(self, node):
-        if self._parent is node:
+        if self._parent == node:
             return
-        if self._parent:
+        if self._parent is not None:
             self._parent.remove_child(self)
-        if node:
+        self._parent = node
+        if node != None:
             node.add_child(self)
 
     def depth_search(self, value):
+        if self.value == value:
+            return self
         for child in self._children:
             node = child.depth_search(value)
-            if node.value == value:
+            if(node is not None):
                 return node
+            # if child.value == value:
+            #     return
+            # else:
+            #     child.depth_search(value)
+        return None
+
+    def breadth_search(self, value):
+        new_lst = list(self)
+        while len(new_lst) > 0:
+            removed = new_lst.pop(0)
+            if removed.value == value:
+                return removed
             else:
-                node.depth_search(value)
+                if removed._children:
+                    new_lst.append(removed._children)
         return None
 
 
