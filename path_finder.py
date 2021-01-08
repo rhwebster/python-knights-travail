@@ -25,11 +25,22 @@ class KnightPathFinder:
         for key in move_set:
             new_pos_x = (x + key[0])
             new_pos_y = (y + key[1])
-            if (0 <= new_pos_x < 8) or (0 <= new_pos_y < 8):
+            if (0 <= new_pos_x < 8) and (0 <= new_pos_y < 8):
                 valid_move_set.add((new_pos_x, new_pos_y))
 
         return valid_move_set
+    
+    def new_move_position(self, pos):
+        moves = self.get_valid_move(pos)
+
+        filtered_moves = moves.difference(self._considered_positions)
+
+        self._considered_positions.update(filtered_moves)
+
+        return filtered_moves
+
 
 
 finder = KnightPathFinder((0, 0))
 print(finder.get_valid_move(finder._root))
+print(finder.new_move_position((4,1)))
