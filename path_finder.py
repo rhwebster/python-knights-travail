@@ -2,8 +2,8 @@ from tree import Node
 
 class KnightPathFinder:
     def __init__(self,pos):
-        self._root = pos
-        self._considered_positions = set(self._root)
+        self._root = Node(pos)
+        self._considered_positions = set(pos)
 
 
     def get_valid_move(self, pos):
@@ -40,11 +40,11 @@ class KnightPathFinder:
         return filtered_moves
 
     def build_move_tree(self):
-        queue = list(self._root)
+        queue = [self._root]
 
         while(len(queue) > 0):
             node = queue.pop(0)
-            moves = self.new_move_position(node)
+            moves = self.new_move_position(node.value)
             for move in moves:
                 child = Node(move)
                 node.add_child(child)
@@ -54,7 +54,7 @@ class KnightPathFinder:
 
 
 finder = KnightPathFinder((0, 0))
-print(finder.get_valid_move(finder._root))
+print(finder.get_valid_move(finder._root.value))
 print(finder.new_move_position((4,1)))
 
 finder.build_move_tree()
