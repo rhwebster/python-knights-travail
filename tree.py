@@ -52,14 +52,15 @@ class Node:
         return None
 
     def breadth_search(self, value):
-        new_lst = list(self)
+        new_lst = [self]
         while len(new_lst) > 0:
             removed = new_lst.pop(0)
+            print(removed)
             if removed.value == value:
                 return removed
             else:
                 if removed._children:
-                    new_lst.append(removed._children)
+                    new_lst.extend(removed._children)
         return None
 
 
