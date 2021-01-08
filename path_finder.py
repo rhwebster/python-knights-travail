@@ -1,35 +1,35 @@
 from tree import Node
 
 class KnightPathFinder:
-    def __init__(self,position):
-        self._postition = position
-        self._root = Node(0,0)
+    def __init__(self,pos):
+        self._root = pos
         self._considered_positions = set(self._root)
 
     
     def get_valid_move(self, pos):
         (x,y) = pos
 
-        move_set = {
-            move1 = (x + 2, y + 1)
-            move2 = (x + 2, y - 1)
-            move3 = (x - 2, y + 1)
-            move4 = (x - 2, y - 1)
-            move5 = (x + 1, y + 2)
-            move6 = (x - 1, y + 2)
-            move7 = (x + 1, y - 2)
-            move8 = (x - 1, y - 2)
-        }
+        move_set = [
+            (2, 1),
+            (2, -1),
+            (-2, 1),
+            (-2, -1),
+            (1, 2),
+            (-1, 2),
+            (1, -2),
+            (-1, -2),
+        ]
 
         valid_move_set = set()
 
         for key in move_set:
-            new_pos = (position[0]+move_set[key][0], position[1]+move_set[key][1])
-            if (new_pos[0] < 0 or new_pos[1] < 0) or (new_pos[0] > 7 or new_pos[1] > 7):
-                continue
-            else:
-                valid_move_set.add(new_pos)
+            new_pos_x = (x + key[0])
+            new_pos_y = (y + key[1])
+            if (0 <= new_pos_x < 8) or (0 <= new_pos_y < 8):
+                valid_move_set.add((new_pos_x, new_pos_y))
 
         return valid_move_set
 
 
+finder = KnightPathFinder((0, 0))
+print(finder.get_valid_move(finder._root))
